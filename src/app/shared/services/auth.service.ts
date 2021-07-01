@@ -1,10 +1,11 @@
 import { Injectable, NgZone } from '@angular/core';
-import { User } from "../models/user";
+import { User } from '../models/user';
 // import { auth } from 'firebase/app';
-import { AngularFireAuth } from "@angular/fire/auth";
+import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { Router } from "@angular/router";
-import firebase from "firebase";
+import { Router } from '@angular/router';
+import {MessageBox} from '@app/shared/utill/message-box';
+import firebase from 'firebase';
 import auth = firebase.auth;
 
 @Injectable({
@@ -13,6 +14,7 @@ import auth = firebase.auth;
 
 export class AuthService {
   userData: any; // Save logged in user data
+  private messageBox: MessageBox = new MessageBox();
 
   constructor(
     public afs: AngularFirestore,   // Inject Firestore service
@@ -26,12 +28,12 @@ export class AuthService {
       if (user) {
         this.userData = user;
         localStorage.setItem('user', JSON.stringify(this.userData));
-        JSON.parse(<string>localStorage.getItem('user'));
+        JSON.parse(localStorage.getItem('user') as string);
       } else {
         localStorage.setItem('user', 'null');
-        JSON.parse(<string>localStorage.getItem('user'));
+        JSON.parse(localStorage.getItem('user') as string);
       }
-    })
+    });
   }
 
   // Sign in with email/password
@@ -43,8 +45,8 @@ export class AuthService {
         });
         this.SetUserData(result.user);
       }).catch((error) => {
-        window.alert(error.message)
-      })
+        this.messageBox.notifyError(error, {position: 'bottom'});
+      });
   }
 
   // Sign up with email/password
@@ -53,14 +55,13 @@ export class AuthService {
       .then((result) => {
         /* Call the SendVerificaitonMail() function when new user sign
         up and returns promise */
-        /** sends verification email **/
         result.user?.sendEmailVerification();
 
         // this.SendVerificationMail();
         this.SetUserData(result.user);
       }).catch((error) => {
-        window.alert(error.message)
-      })
+        this.messageBox.notifyError(error, {position: 'bottom'});
+      });
   }
 
   // Send email verfificaiton when new user sign up
@@ -77,13 +78,13 @@ export class AuthService {
       .then(() => {
         window.alert('Password reset email sent, check your inbox.');
       }).catch((error) => {
-        window.alert(error)
-      })
+        this.messageBox.notifyError(error, {position: 'bottom'});
+      });
   }
 
   // Returns true when user is looged in and email is verified
   get isLoggedIn(): boolean {
-    const user = JSON.parse(<string>localStorage.getItem('user'));
+    const user = JSON.parse(localStorage.getItem('user') as string);
     console.log((user !== null && user.emailVerified !== false) ? true : false);
     return (user !== null && user.emailVerified !== false) ? true : false;
   }
@@ -99,11 +100,11 @@ export class AuthService {
       .then((result) => {
         this.ngZone.run(() => {
           this.router.navigate(['dashboard']);
-        })
+        });
         this.SetUserData(result.user).then(r => console.log('rsSSSSSSSSSSSSSSS'));
       }).catch((error) => {
-        window.alert(error)
-      })
+        this.messageBox.notifyError(error, {position: 'bottom'});
+      });
   }
 
   /* Setting up user data when sign in with username/password,
@@ -117,10 +118,10 @@ export class AuthService {
       displayName: user.displayName,
       photoURL: user.photoURL,
       emailVerified: user.emailVerified
-    }
+    };
     return userRef.set(userData, {
       merge: true
-    })
+    });
   }
 
   // Sign out
@@ -128,7 +129,7 @@ export class AuthService {
     return this.afAuth.signOut().then(() => {
       localStorage.removeItem('user');
       this.router.navigate(['sign-in']);
-    })
+    });
   }
 
 
