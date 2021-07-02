@@ -15,6 +15,10 @@ import { VerifyEmailComponent } from './components/verify-email/verify-email.com
 import {AuthService} from '@app/shared/services/auth.service';
 import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
+import { ListaIgrejasComponent } from './components/lista-igrejas/lista-igrejas.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {NbThemeModule, NbLayoutModule, NbInputModule, NbButtonModule, NbIconModule} from '@nebular/theme';
+import { NbEvaIconsModule } from '@nebular/eva-icons';
 
 @NgModule({
   declarations: [
@@ -23,7 +27,8 @@ import { HttpClientModule } from '@angular/common/http';
     SignInComponent,
     SignUpComponent,
     ForgotPasswordComponent,
-    VerifyEmailComponent
+    VerifyEmailComponent,
+    ListaIgrejasComponent
   ],
   imports: [
     BrowserModule,
@@ -33,6 +38,13 @@ import { HttpClientModule } from '@angular/common/http';
     AngularFirestoreModule,
     GraphQLModule,
     HttpClientModule,
+    BrowserAnimationsModule,
+    NbThemeModule.forRoot({name: 'default'}),
+    NbLayoutModule,
+    NbEvaIconsModule,
+    NbInputModule,
+    NbButtonModule,
+    NbIconModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

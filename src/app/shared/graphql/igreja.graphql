@@ -13,12 +13,11 @@ query Igrejas {
     nome
     images {
       fileName
+      url
       size
     }
   }
 }
-
-
 
 #mutation addSet($name: String!, $year: String!, $numParts: Int!) {
 #  addSet(name: $name, year: $year, numParts: $numParts) {

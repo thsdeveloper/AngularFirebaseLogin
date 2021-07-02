@@ -1,56 +1,25 @@
 <div class="displayTable">
-  <div class="displayTableCell">
-    <div *ngIf="loading">
-      Loading...
-    </div>
-    <div *ngIf="error">
-      Error :(
-    </div>
-    <div *ngIf="paginas$">
-      <div *ngFor="let pagina of paginas$ | async">
-        <h1>{{pagina.nome}}</h1>
-        <div [innerHTML]="pagina.descricao?.html"></div>
-        <div *ngFor="let image of pagina.images">
-          {{image.size}}
-        </div>
-      </div>
-    </div>
     <div class="authBlock">
-      <h3>Sign In</h3>
-      <div class="formGroup">
-        <input type="text" class="formControl" placeholder="Username" #userName required>
-      </div>
+      <h3>AdebSystem 2.0</h3>
+      <input nbInput fullWidth fieldSize="giant" type="text" class="formControl" placeholder="Username" #userName
+             required>
 
-      <div class="formGroup">
-        <input type="password" class="formControl" placeholder="Password" #userPassword required>
-      </div>
+      <input nbInput fullWidth fieldSize="giant" type="password" class="formControl" placeholder="Password"
+             #userPassword
+             required>
 
       <!-- Calling SignIn Api from AuthService -->
-      <div class="formGroup">
-        <input type="button" class="btn btnPrimary" value="Log in"
-               (click)="authService.SignIn(userName.value, userPassword.value)">
-      </div>
-
-      <div class="formGroup">
-        <span class="or"><span class="orInner">Or</span></span>
-      </div>
+      <button nbButton fullWidth status="primary" (click)="authService.SignIn(userName.value, userPassword.value)">
+        Entrar
+      </button>
 
       <!-- Calling GoogleAuth Api from AuthService -->
-      <div class="formGroup">
-        <button type="button" class="btn googleBtn" (click)="authService.GoogleAuth()">
-          <i class="fab fa-google-plus-g"></i>
-          Log in with Google
-        </button>
-      </div>
+      <button nbButton fullWidth status="danger" type="button" (click)="authService.GoogleAuth()">
+        <nb-icon icon="google"></nb-icon>
+        Google
+      </button>
 
-      <div class="forgotPassword">
-        <span routerLink="/forgot-password">Forgot Password?</span>
-      </div>
+      <button nbButton outline status="primary" routerLink="/forgot-password">Esqueci a senha!</button>
+      <button nbButton outline status="primary" routerLink="/register-user">Cadastre-se com e-mail</button>
     </div>
-
-    <div class="redirectToLogin">
-      <span>Don't have an account?<span class="redirect" routerLink="/register-user"> Sign Up</span></span>
-    </div>
-
-  </div>
 </div>

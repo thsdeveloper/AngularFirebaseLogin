@@ -1,9 +1,9 @@
-import { Injectable, NgZone } from '@angular/core';
-import { User } from '../models/user';
+import {Injectable, NgZone} from '@angular/core';
+import {User} from '../models/user';
 // import { auth } from 'firebase/app';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { Router } from '@angular/router';
+import {AngularFireAuth} from '@angular/fire/auth';
+import {AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firestore';
+import {Router} from '@angular/router';
 import {MessageBox} from '@app/shared/utill/message-box';
 import firebase from 'firebase';
 import auth = firebase.auth;
@@ -53,11 +53,13 @@ export class AuthService {
   SignUp(email: any, password: any) {
     return this.afAuth.createUserWithEmailAndPassword(email, password)
       .then((result) => {
-        /* Call the SendVerificaitonMail() function when new user sign
-        up and returns promise */
-        result.user?.sendEmailVerification();
+        // Call the SendVerificaitonMail() function when new user sign
+        // up and returns promise
+        result.user?.sendEmailVerification().then(result => {
+          this.router.navigate(['verify-email-address']);
+          console.log('Email enviado,', result);
+        });
 
-        // this.SendVerificationMail();
         this.SetUserData(result.user);
       }).catch((error) => {
         this.messageBox.notifyError(error, {position: 'bottom'});
@@ -66,10 +68,9 @@ export class AuthService {
 
   // Send email verfificaiton when new user sign up
   // SendVerificationMail() {
-  //   return this.afAuth.currentUser.sendEmailVerification()
-  //     .then(() => {
+  //   return this.afAuth.currentUser.sendEmailVerification().then(() => {
   //       this.router.navigate(['verify-email-address']);
-  //     })
+  //     });
   // }
 
   // Reset Forggot password
@@ -85,8 +86,9 @@ export class AuthService {
   // Returns true when user is looged in and email is verified
   get isLoggedIn(): boolean {
     const user = JSON.parse(localStorage.getItem('user') as string);
-    console.log((user !== null && user.emailVerified !== false) ? true : false);
-    return (user !== null && user.emailVerified !== false) ? true : false;
+    // Todo: Verificar se temos que verificar o e-mail antes de logar o usuário.
+    // (user !== null && user.emailVerified !== false) ? true : false
+    return (user !== null) ? true : false;
   }
 
   // Sign in with Google
@@ -96,15 +98,14 @@ export class AuthService {
 
   // Auth logic to run auth providers
   AuthLogin(provider: any) {
-    return this.afAuth.signInWithPopup(provider)
-      .then((result) => {
-        this.ngZone.run(() => {
-          this.router.navigate(['dashboard']);
-        });
-        this.SetUserData(result.user).then(r => console.log('rsSSSSSSSSSSSSSSS'));
-      }).catch((error) => {
-        this.messageBox.notifyError(error, {position: 'bottom'});
-      });
+    return this.afAuth.signInWithPopup(provider).then((result) => {
+      // this.ngZone.run(() => {
+        this.router.navigate(['dashboard']);
+      // });
+        this.SetUserData(result.user).then(r => console.log('Inserindo User no DataStorage...'));
+    }).catch((error) => {
+      this.messageBox.notifyError(error, {position: 'bottom'});
+    });
   }
 
   /* Setting up user data when sign in with username/password,

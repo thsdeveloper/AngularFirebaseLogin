@@ -2933,7 +2933,7 @@ export type IgrejasQuery = (
       & Pick<RichText, 'text' | 'html'>
     )>, images: Array<(
       { __typename?: 'Asset' }
-      & Pick<Asset, 'fileName' | 'size'>
+      & Pick<Asset, 'fileName' | 'url' | 'size'>
     )> }
   )> }
 );
@@ -2952,6 +2952,7 @@ export const IgrejasDocument = gql`
     nome
     images {
       fileName
+      url
       size
     }
   }
