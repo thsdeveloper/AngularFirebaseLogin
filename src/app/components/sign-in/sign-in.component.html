@@ -1,6 +1,20 @@
 <div class="displayTable">
   <div class="displayTableCell">
-
+    <div *ngIf="loading">
+      Loading...
+    </div>
+    <div *ngIf="error">
+      Error :(
+    </div>
+    <div *ngIf="paginas$">
+      <div *ngFor="let pagina of paginas$ | async">
+        <h1>{{pagina.nome}}</h1>
+        <div [innerHTML]="pagina.descricao?.html"></div>
+        <div *ngFor="let image of pagina.images">
+          {{image.size}}
+        </div>
+      </div>
+    </div>
     <div class="authBlock">
       <h3>Sign In</h3>
       <div class="formGroup">
@@ -13,7 +27,8 @@
 
       <!-- Calling SignIn Api from AuthService -->
       <div class="formGroup">
-        <input type="button" class="btn btnPrimary" value="Log in" (click)="authService.SignIn(userName.value, userPassword.value)">
+        <input type="button" class="btn btnPrimary" value="Log in"
+               (click)="authService.SignIn(userName.value, userPassword.value)">
       </div>
 
       <div class="formGroup">

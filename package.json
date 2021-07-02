@@ -7,7 +7,9 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "generate": "graphql-codegen --config codegen.yml",
+    "generate-types": "graphql-codegen --config codegen.yml"
   },
   "private": true,
   "dependencies": {
@@ -20,17 +22,25 @@
     "@angular/platform-browser": "~11.2.1",
     "@angular/platform-browser-dynamic": "~11.2.1",
     "@angular/router": "~11.2.1",
+    "apollo-angular": "^2.6.0",
     "bootstrap": "^5.0.1",
     "firebase": "^8.6.7",
     "rxjs": "~6.6.0",
     "sweetalert2": "^11.0.18",
     "tslib": "^2.0.0",
-    "zone.js": "~0.11.3"
+    "zone.js": "~0.11.3",
+    "@apollo/client": "^3.0.0",
+    "graphql": "^15.0.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1102.1",
     "@angular/cli": "~11.2.1",
     "@angular/compiler-cli": "~11.2.1",
+    "@graphql-codegen/cli": "1.21.6",
+    "@graphql-codegen/introspection": "1.18.2",
+    "@graphql-codegen/typescript": "1.22.4",
+    "@graphql-codegen/typescript-apollo-angular": "2.3.7",
+    "@graphql-codegen/typescript-operations": "1.18.3",
     "@types/jasmine": "~3.6.0",
     "@types/node": "^12.11.1",
     "codelyzer": "^6.0.0",
