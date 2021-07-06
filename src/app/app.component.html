@@ -1,16 +1,48 @@
-<nb-layout>
+<nb-layout windowMode>
 
-  <nb-layout-header fixed>
-  <!-- Insert header here -->
+  <nb-layout-header fixed *ngIf="authService.isLoggedIn">
+    <div class="header-container">
+      <div class="logo-container">
+        <div class="logo" href="#" (click)="navigateHome()">
+          <nb-icon icon="menu-2-outline" (click)="toggle()"></nb-icon>
+          AdebSystem 2.0</div>
+      </div>
+    </div>
+
+    <div class="header-container" *ngIf="authService.userData as user">
+      <nb-actions size="small">
+        <nb-action class="control-item">
+          <nb-search type="rotate-layout"></nb-search>
+        </nb-action>
+        <nb-action class="control-item" icon="email-outline"></nb-action>
+        <nb-action class="control-item" icon="bell-outline"></nb-action>
+        <nb-action class="user-action">
+          <nb-user
+                   [onlyPicture]="true"
+                   [name]="user.displayName"
+                   [picture]="user.photoURL">
+          </nb-user>
+        </nb-action>
+      </nb-actions>
+    </div>
+
+
+
+    <button nbButton status="success" size="tiny" (click)="toggle()">Menu</button>
+
   </nb-layout-header>
 
+
+  <nb-sidebar *ngIf="authService.isLoggedIn">
+      <nb-menu [items]="items"></nb-menu>
+  </nb-sidebar>
+
   <nb-layout-column>
-    
     <router-outlet></router-outlet>
-    
   </nb-layout-column>
 
   <nb-layout-footer fixed>
+    AdebSystem 2.0 - Todos os direitos reservados
   <!-- Insert footer here -->
   </nb-layout-footer>
 

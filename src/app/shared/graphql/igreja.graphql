@@ -19,6 +19,13 @@ query Igrejas {
   }
 }
 
+mutation DeleteIgreja($id: ID!){
+  deleteIgreja(where: {id: $id}) {
+    id
+    nome
+  }
+}
+
 #mutation addSet($name: String!, $year: String!, $numParts: Int!) {
 #  addSet(name: $name, year: $year, numParts: $numParts) {
 #    id

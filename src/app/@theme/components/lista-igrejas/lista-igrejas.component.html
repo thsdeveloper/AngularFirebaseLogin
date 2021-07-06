@@ -1,0 +1,21 @@
+<div *ngIf="loading">
+  Carregando...
+</div>
+<div *ngIf="error">
+  Error :(
+</div>
+<div *ngIf="igrejas$" status="success">
+  <nb-card *ngFor="let igreja of igrejas$ | async" [nbSpinner]="loading" status="primary">
+    <nb-card-header>
+      {{igreja.nome}}
+      <button nbButton status="danger" (click)="excluirIgreja(igreja.id)">Excluir</button>
+    </nb-card-header>
+    <nb-card-body>
+      <div [innerHTML]="igreja.descricao?.html"></div>
+      <div *ngFor="let image of igreja.images">
+        <img [src]="image.url" [alt]="image.fileName">
+      </div>
+    </nb-card-body>
+    <nb-card-footer>Data fundação: {{igreja.data_fundacao}}</nb-card-footer>
+  </nb-card>
+</div>

@@ -3,19 +3,21 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 // Import all the components for which navigation service has to be activated
-import { SignInComponent } from '../app/components/sign-in/sign-in.component';
-import { SignUpComponent } from '../app/components/sign-up/sign-up.component';
-import { DashboardComponent } from '../app/components/dashboard/dashboard.component';
-import { ForgotPasswordComponent } from '../app/components/forgot-password/forgot-password.component';
-import { VerifyEmailComponent } from '../app/components/verify-email/verify-email.component';
+import { SignInComponent } from './pages/sign-in/sign-in.component';
+import { SignUpComponent } from './pages/sign-up/sign-up.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
+import { VerifyEmailComponent } from './pages/verify-email/verify-email.component';
 
-import { AuthGuard } from "../app/shared/guard/auth.guard";
+import { AuthGuard } from '../app/shared/guard/auth.guard';
+import {IgrejaComponent} from '@app/pages/igreja/igreja.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/sign-in', pathMatch: 'full' },
   { path: 'sign-in', component: SignInComponent },
   { path: 'register-user', component: SignUpComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'igreja', component: IgrejaComponent, canActivate: [AuthGuard] },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'verify-email-address', component: VerifyEmailComponent }
 ];

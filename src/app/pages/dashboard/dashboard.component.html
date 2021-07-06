@@ -1,0 +1,27 @@
+<div>
+  <div *ngIf="authService.userData as user">
+    <div class="col-md-12">
+      <div class="media">
+        <nb-user size="large"
+                 [name]="user.displayName"
+                 [title]="user.email"
+                 showTitle=true
+                 [picture]="user.photoURL ? user.photoURL : '/assets/dummy-user.png'">
+        </nb-user>
+
+        <div class="media-body">
+          <h1>Olá <strong>{{(user.displayName) ? user.displayName : 'User'}}</strong>!</h1>
+          <p>User ID: <strong>{{user.uid}}</strong></p>
+          <p>Email: <strong>{{user.email}}</strong></p>
+          <p>Email Verificado: <strong>{{user.emailVerified}}</strong></p>
+        </div>
+      </div>
+    </div>
+    <button nbButton outline shape="round" size="small" status="danger" (click)="authService.SignOut()">
+      <nb-icon icon="log-out"></nb-icon>
+      Sair
+    </button>
+  </div>
+
+
+</div>

@@ -2938,6 +2938,19 @@ export type IgrejasQuery = (
   )> }
 );
 
+export type DeleteIgrejaMutationVariables = Exact<{
+  id?: Maybe<Scalars['ID']>;
+}>;
+
+
+export type DeleteIgrejaMutation = (
+  { __typename?: 'Mutation' }
+  & { deleteIgreja?: Maybe<(
+    { __typename?: 'Igreja' }
+    & Pick<Igreja, 'id' | 'nome'>
+  )> }
+);
+
 export const IgrejasDocument = gql`
     query Igrejas {
   igrejas {
@@ -2964,6 +2977,25 @@ export const IgrejasDocument = gql`
   })
   export class IgrejasGQL extends Apollo.Query<IgrejasQuery, IgrejasQueryVariables> {
     document = IgrejasDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const DeleteIgrejaDocument = gql`
+    mutation DeleteIgreja($id: ID) {
+  deleteIgreja(where: {id: $id}) {
+    id
+    nome
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class DeleteIgrejaGQL extends Apollo.Mutation<DeleteIgrejaMutation, DeleteIgrejaMutationVariables> {
+    document = DeleteIgrejaDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
